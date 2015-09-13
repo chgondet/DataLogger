@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8187.4" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8151.3"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
+                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="titanium-texture.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="442-Fv-OtP" userLabel="imageView">
+                                <rect key="frame" x="0.0" y="20" width="400" height="600"/>
+                                <color key="backgroundColor" red="0.0056161218069999998" green="0.1091782447" blue="0.29014756940000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="600" id="Amd-QA-xj3">
+                                        <variation key="widthClass=compact" constant="620"/>
+                                    </constraint>
+                                    <constraint firstAttribute="width" constant="400" id="XVE-eK-JBC"/>
+                                </constraints>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="Amd-QA-xj3"/>
+                                        <exclude reference="XVE-eK-JBC"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_on_solution_goodtimes.png" translatesAutoresizingMaskIntoConstraints="NO" id="Soa-0P-nPj">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="2nO-YW-vrM"/>
+                                    <constraint firstAttribute="width" constant="161" id="Oqv-eE-lx0"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="2nO-YW-vrM"/>
+                                        <exclude reference="Oqv-eE-lx0"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="2nO-YW-vrM"/>
+                                        <include reference="Oqv-eE-lx0"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="442-Fv-OtP" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="bbX-oW-Q7M"/>
+                            <constraint firstAttribute="trailing" secondItem="442-Fv-OtP" secondAttribute="trailing" id="cC9-nN-I40"/>
+                            <constraint firstItem="442-Fv-OtP" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="kYP-iE-CeE"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="442-Fv-OtP" secondAttribute="bottom" constant="-20" id="nO6-Sz-QRX"/>
+                            <constraint firstItem="Soa-0P-nPj" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="o3B-Eu-9mC"/>
+                            <constraint firstItem="Soa-0P-nPj" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="sUW-XE-4Sj"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="Soa-0P-nPj"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="o3B-Eu-9mC"/>
+                                <exclude reference="sUW-XE-4Sj"/>
+                                <exclude reference="bbX-oW-Q7M"/>
+                                <exclude reference="cC9-nN-I40"/>
+                                <exclude reference="kYP-iE-CeE"/>
+                                <exclude reference="nO6-Sz-QRX"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="Soa-0P-nPj"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="o3B-Eu-9mC"/>
+                                <include reference="sUW-XE-4Sj"/>
+                                <include reference="bbX-oW-Q7M"/>
+                                <include reference="cC9-nN-I40"/>
+                                <include reference="kYP-iE-CeE"/>
+                                <include reference="nO6-Sz-QRX"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="52.5" y="375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="logo_on_solution_goodtimes.png" width="345" height="81"/>
+        <image name="titanium-texture.jpg" width="3000" height="2000"/>
+    </resources>
+</document>

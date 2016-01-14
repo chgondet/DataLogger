@@ -17,6 +17,7 @@ class ViewSettings : UIViewController{
     @IBOutlet weak var tfPort: UITextField!
     @IBOutlet weak var tfService: UITextField!
     
+    @IBOutlet weak var tfTag: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,13 +27,19 @@ class ViewSettings : UIViewController{
         tfAddress.text = datalogger.myServeur.address
         tfPort.text = String (datalogger.myServeur.port)
         tfService.text = datalogger.myServeur.service
+        tfTag.text = datalogger.myServeur.tag
         
     }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
     
     @IBAction func backPush(sender: AnyObject) {
         let p: Int =  Int(tfPort.text!)!
         
-        datalogger.setNewServeurValue(tfAddress.text,port:p ,service: tfService.text)
+        datalogger.setNewServeurValue(tfAddress.text,port:p ,service: tfService.text ,tag: tfTag.text)
         
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject("Coding Explorer", forKey: "userNameKey")

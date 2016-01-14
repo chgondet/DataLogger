@@ -20,7 +20,23 @@ class ViewController: UIViewController {
     let dateFormatter = NSDateFormatter()
     
 
+    @IBAction func btnStopRecord(sender: UIButton) {
+        RecordButton.hidden = false
+        stopRecord.hidden = true
+        
+        datalogger.stopRecording()
+    }
     
+    @IBOutlet weak var interval: UILabel!
+    
+    @IBOutlet weak var stopRecord: UIButton!
+    @IBAction func btnRecord(sender: UIButton) {
+        datalogger.record()
+        RecordButton.hidden = true
+        stopRecord.hidden = false
+        
+    }
+    @IBOutlet weak var RecordButton: UIButton!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var imgGrid: UIImageView!
     @IBOutlet weak var startDate: UITextField!
@@ -79,6 +95,7 @@ class ViewController: UIViewController {
         
     }
     @IBAction func btnSend(sender: UIButton) {
+       
         datalogger.submitAction()
         
     }
@@ -99,6 +116,8 @@ class ViewController: UIViewController {
         stopDate.text = dateFormatter.stringFromDate(datalogger.stopDate)
         infoStart.text = dateFormatter.stringFromDate(datalogger.startDate)
         infoStop.text = dateFormatter.stringFromDate(datalogger.stopDate)
+        interval.text = datalogger.stopDate.offsetFrom(datalogger.startDate)
+        
         
         
     }
@@ -126,9 +145,10 @@ class ViewController: UIViewController {
         dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle
        showDate()
         
-       // DrawGrid()
-       // DrawTable(datalogger.values)
-
+        DrawGrid()
+        DrawTable(datalogger.values)
+        datalogger.myVC = self
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -136,6 +156,8 @@ class ViewController: UIViewController {
     }
     
     func DrawTable (vals : [CGFloat]){
+        
+        
        // print (values)
        // NSLog("Largeur %d, Longueur %d",(Int)(imgView.frame.height),(Int)(imgView.frame.width))
         UIGraphicsBeginImageContext(imgView.frame.size)
@@ -146,8 +168,8 @@ class ViewController: UIViewController {
         CGContextSetBlendMode(context, CGBlendMode.Normal)
         
         CGContextMoveToPoint(context,0,imgView.frame.height - vals[0] / 100.0 *  imgView.frame.height)
-        for i in 1...100{
-            CGContextAddLineToPoint(context, (CGFloat)(i) / (CGFloat)(100.0) * (imgView.frame.width) ,imgView.frame.height - vals[i] / 100.0 *  imgView.frame.height)
+        for i in 1...datalogger.MaxPoints{
+            CGContextAddLineToPoint(context, (CGFloat)(i) / (CGFloat)(datalogger.MaxPoints) * (imgView.frame.width) ,imgView.frame.height - vals[i] / 100.0 *  imgView.frame.height)
             
         }
         CGContextStrokePath(context)
@@ -189,6 +211,17 @@ class ViewController: UIViewController {
     }
 
     
+    func showMessage(Title:String, Message:String, Button:String){
+            
+            let alertController = UIAlertController(title: Title, message:
+                Message, preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: Button, style: UIAlertActionStyle.Default,handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+        
+    
+
+    
     var location = CGPoint(x: 0, y: 0)
     
     
@@ -199,9 +232,9 @@ class ViewController: UIViewController {
           //  NSLog("Start %.2f,%.2f",location.x,location.y)
             
             if location.y<imgView.frame.height{
-                let p=max(min((Int)(location.x/imgView.frame.width*100),100),0)
-                let h=(CGFloat)(max(min((Int)(location.y/imgView.frame.height*100),100),0))
-                datalogger.values[p]=100.0 - h
+                let p=max(min((Int)(location.x/imgView.frame.width*CGFloat(datalogger.MaxPoints)),datalogger.MaxPoints),0)
+                let h=100.0 - (CGFloat)(max(min((location.y/imgView.frame.height*100),100.0),0.0))
+                datalogger.values[p] = h
                 DrawTable(datalogger.values)
                 lastX = p
                 }
@@ -213,13 +246,14 @@ class ViewController: UIViewController {
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let touch = touches.first {
             //location = touch.locationInView(self.view)
-            //NSLog("view %.2f,%.2f",location.x,location.y)
+            
             location = touch.locationInView(imgView)
             //NSLog("imgView %.2f,%.2f",location.x,location.y)
             if location.y<imgView.frame.height{
-                let p=max(min((Int)(location.x/imgView.frame.width*100),100),0)
-                let h=(CGFloat)(max(min((Int)(location.y/imgView.frame.height*100),100),0))
-                datalogger.values[p]=100.0 - h
+                let p=max(min(Int(location.x/imgView.frame.width*CGFloat(datalogger.MaxPoints)),datalogger.MaxPoints),0)
+                let h=100.0 - (CGFloat)(max(min(location.y/imgView.frame.height*100,100.0),0.0))
+                datalogger.values[p] = h
+                //NSLog("view %.2f,%.2f data = \(p), \(h)",location.x,location.y)
                 if abs(p-lastX)>1{
                     doInterpol(p)
                 }
@@ -253,10 +287,10 @@ class ViewController: UIViewController {
         
 
         if location.y<imgView.frame.height{
-            let p=max(min((Int)(location.x/imgView.frame.width*100),100),0)
-            let h=(CGFloat)(max(min((Int)(location.y/imgView.frame.height*100),100),0))
-            datalogger.values[p]=100.0 - h
-            if (p-lastX)>1{
+            let p=max(min((Int)(location.x/imgView.frame.width*CGFloat(datalogger.MaxPoints)),datalogger.MaxPoints),0)
+            let h=100.0 - (CGFloat)(max(min(location.y/imgView.frame.height*100,100),0))
+            datalogger.values[p] = h
+            if abs(p-lastX)>1{
                 doInterpol(p)
             }
             DrawTable(datalogger.values)
